@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ZobekPL/todolist#readme",
   "devDependencies": {
     "chai": "^4.1.0",
+    "chai-as-promised": "^7.1.1",
     "chai-http": "^3.0.0",
     "mocha": "^3.5.0"
   },

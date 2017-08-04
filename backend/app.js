@@ -2,6 +2,7 @@
 let express = require('express');
 let bodyParser = require('body-parser');
 let logger = require('morgan');
+let database = require('./config/database');
 
 let app = express();
 
