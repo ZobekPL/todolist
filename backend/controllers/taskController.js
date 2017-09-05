@@ -13,6 +13,20 @@ class taskController {
     });
   }
 
+  getAllTasks(){
+    return new Promise((resolve, reject) => {
+      Task.find({}, (error, tasks) => {
+        if(error)
+          reject({error: error});
+
+        if(tasks == null)
+          resolve([]);
+
+        resolve(tasks);
+      });
+    });
+  }
+
   deleteTasksCreatedForTest(cb){
     Task.remove({ isCreatedForTest: true }, function (err) {
       if (err) return cb(err);

@@ -39,6 +39,32 @@ describe('Router', function(){
 
   describe('taskRouter.js', function(){
     describe('/tasks', function(){
+      describe('GET', function(){
+        it('should be successfull', function(done){
+          chai.request(server.app)
+          .get('/api/tasks')
+          .end(function(err, res){
+            assert.equal(res.status, 200);
+            assert.typeOf(err, 'null');
+            done();
+          });
+        });
+
+        it('should response array of tasks and message', function(done){
+          chai.request(server.app)
+          .get('/api/tasks')
+          .end(function(err, res){
+            let message = res.body.message;
+            let resultTasks = res.body.tasks;
+
+            assert.isDefined(message);
+            assert.isDefined(resultTasks);
+            assert.typeOf(resultTasks, 'array');
+            done();
+          });
+        });
+      });
+      
       describe('POST', function(){
         afterEach(function(){
           taskController.deleteTasksCreatedForTest(function(err){
