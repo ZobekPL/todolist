@@ -6,6 +6,7 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let assert = chai.assert;
 
+let taskController = require('../controllers/taskController');
 let server = require('../');
 
 chai.use(chaiHttp);
@@ -13,20 +14,103 @@ chai.use(chaiHttp);
 describe('Router', function(){
   describe('index.js', function(){
     describe('/api', function(){
-      it('should be successfull', function(){
-        chai.request(server.app)
-        .get('/api')
-        .end(function(err, res){
-          assert.typeOf(err, 'null');
-          assert.equal(res.status, 200);
+      describe('GET', function(){
+        it('should be successfull', function(done){
+          chai.request(server.app)
+          .get('/api')
+          .end(function(err, res){
+            assert.typeOf(err, 'null');
+            assert.equal(res.status, 200);
+            done();
+          });
+        });
+
+        it('should response hello world message', function(done){
+          chai.request(server.app)
+          .get('/api')
+          .end(function(err, res){
+            assert.deepEqual(res.body, { message: "Hello world"});
+            done();
+          });
         });
       });
+    });
+  });
 
-      it('should response hello world message', function(){
-        chai.request(server.app)
-        .get('/api')
-        .end(function(err, res){
-          assert.deepEqual(res.body, { message: "Hello World"});
+  describe('taskRouter.js', function(){
+    describe('/tasks', function(){
+      describe('POST', function(){
+        afterEach(function(){
+          taskController.deleteTasksCreatedForTest(function(err){
+            if(err)
+              return err;
+          });
+        });
+
+        it('should create be successfull', function(done){
+          chai.request(server.app)
+          .post('/api/tasks')
+          .type('form')
+          .send({
+            title: 'Test task',
+            isCreatedForTest: true
+          })
+          .end(function(err, res){
+            assert.equal(res.status, 200);
+            assert.typeOf(err, 'null');
+            done();
+          });
+        });
+
+        it('should response new task', function(done){
+          let expectedResult = {
+            title: 'Test task',
+            isCreatedForTest: true,
+            isDone: false,
+            date: Date.now()
+          };
+
+          chai.request(server.app)
+          .post('/api/tasks')
+          .type('form')
+          .send({
+            title: 'Test task',
+            isCreatedForTest: true,
+            date: expectedResult.date
+          })
+          .end(function(err, res){
+            let message = res.body.message;
+            let resultTask = res.body.task;
+
+            assert.isDefined(message);
+            assert.isObject(resultTask);
+
+            assert.equal(resultTask.title, expectedResult.title);
+            assert.equal(resultTask.isDone, expectedResult.isDone);
+            assert.typeOf(new Date(resultTask.date), 'date');
+            done();
+          });
+        });
+
+        it('should respond with error if wrong input is given', function(done){
+          let expectedResult = {
+            title: 'Test task',
+            isDone: false
+          };
+
+          chai.request(server.app)
+          .post('/api/tasks')
+          .type('form')
+          .send({
+            titleze: true,
+            isCreatedForTest: true,
+            date: 64*7+'adek'
+          })
+          .end(function(err, res){
+            assert.isNotNull(err);
+            assert.equal(res.status, 400);
+            done();
+          });
         });
       });
     });
