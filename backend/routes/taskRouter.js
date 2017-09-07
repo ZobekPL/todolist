@@ -6,19 +6,19 @@ module.exports = (router) => {
   .get((req, res) => {
     taskController.getAllTasks()
     .then((result) =>{
-      res.json({tasks: result, message: 'Task loaded successfully.'});
+      res.json({tasks: result.tasks, message: 'Task loaded successfully.'});
     })
     .catch((err) =>{
-      res.status(500).send('Internal Error');
+      res.status(err.status).send(err.error);
     });
   })
   .post((req, res) => {
     taskController.createTask(req.body)
     .then((result) =>{
-      res.json({task: result, message: 'Task created successfully.'});
+      res.json({task: result.task, message: 'Task created successfully.'});
     })
     .catch((err) =>{
-      res.status(400).send('Bad Request');
+      res.status(err.status).send(err.error);
     });
   });
 };

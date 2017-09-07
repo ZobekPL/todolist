@@ -19,7 +19,7 @@ describe('TaskController', function(){
     it('should return new task', function(){
       let taskBody = {
           title: 'Test task',
-          isCreatedForTest: true  
+          isCreatedForTest: true
       };
       let expectedResult = {
         title: 'Test task',
@@ -27,7 +27,8 @@ describe('TaskController', function(){
       };
       let newTask = taskController.createTask(taskBody);
 
-      return assert.isFulfilled(newTask).then(function(resultTask){
+      return assert.isFulfilled(newTask).then(function(result){
+        let resultTask = result.task;
         assert.isObject(resultTask);
 
         assert.equal(resultTask.title, expectedResult.title);

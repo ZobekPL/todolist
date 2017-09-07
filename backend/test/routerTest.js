@@ -64,12 +64,12 @@ describe('Router', function(){
           });
         });
       });
-      
+
       describe('POST', function(){
         afterEach(function(){
-          taskController.deleteTasksCreatedForTest(function(err){
-            if(err)
-              return err;
+          taskController.deleteTasksCreatedForTest()
+          .catch(function(err){
+            return err;
           });
         });
 
@@ -134,7 +134,7 @@ describe('Router', function(){
           })
           .end(function(err, res){
             assert.isNotNull(err);
-            assert.equal(res.status, 400);
+            assert.equal(res.status, 500);
             done();
           });
         });
