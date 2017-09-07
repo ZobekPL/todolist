@@ -27,6 +27,20 @@ class taskController {
     });
   }
 
+  getTaskById(taskId){
+    return new Promise((resolve, reject) => {
+      Task.findById(taskId, (error, task) => {
+        if(error)
+          reject({error: error});
+
+        if(task == null)
+          resolve([]);
+
+        resolve(task);
+      });
+    });
+  }
+
   deleteTasksCreatedForTest(cb){
     Task.remove({ isCreatedForTest: true }, function (err) {
       if (err) return cb(err);
