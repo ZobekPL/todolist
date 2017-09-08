@@ -21,4 +21,16 @@ module.exports = (router) => {
       res.status(err.status).send(err.error);
     });
   });
+
+  router.route('/task/:id')
+  .get((req, res) => {
+    let taskId = req.params.id;
+    taskController.getTaskById(taskId)
+    .then((result) => {
+      res.json({task: result.task, message: 'Task loaded successfully.'})
+    })
+    .catch((err) => {
+      res.status(err.status).send(err.error);
+    });
+  });
 };

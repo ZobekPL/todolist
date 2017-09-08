@@ -140,5 +140,34 @@ describe('Router', function(){
         });
       });
     });
+
+    describe('/task/:id', function(){
+      const TEST_TASK_ID = '59b165db7a4334169be016fe';
+      describe('GET', function(){
+        it('should be successfull', function(done){
+          chai.request(server.app)
+          .get('/api/task/59b165db7a4334169be016fe')
+          .end(function(err, res){
+            assert.equal(res.status, 200);
+            assert.typeOf(err, 'null');
+            done();
+          });
+        });
+
+        it('should response array of tasks and message', function(done){
+          chai.request(server.app)
+          .get('/api/task/'+TEST_TASK_ID)
+          .end(function(err, res){
+            let message = res.body.message;
+            let resultTask = res.body.task;
+
+            assert.isDefined(message);
+            assert.isDefined(resultTask);
+            assert.typeOf(resultTask, 'object');
+            done();
+          });
+        });
+      });
+    });
   });
 });
