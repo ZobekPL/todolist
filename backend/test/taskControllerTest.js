@@ -37,4 +37,15 @@ describe('TaskController', function(){
       });
     });
   });
+
+  describe('getAllTasks()', function(){
+    it('should return array of tasks', function(){
+      let getTasks = taskController.getAllTasks();
+
+      return assert.isFulfilled(getTasks).then(function(result){
+        let resultTasks = result.tasks;
+        assert.typeOf(resultTask, 'array');
+      });
+    });
+  });
 });
