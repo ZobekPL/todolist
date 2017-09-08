@@ -21,4 +21,39 @@ module.exports = (router) => {
       res.status(err.status).send(err.error);
     });
   });
+
+  router.route('/task/:id')
+  .get((req, res) => {
+    let taskId = req.params.id;
+    taskController.getTaskById(taskId)
+    .then((result) => {
+      res.json({task: result.task, message: 'Task loaded successfully.'})
+    })
+    .catch((err) => {
+      res.status(err.status).send(err.error);
+    });
+  })
+  .put((req,res) => {
+    let taskId = req.params.id;
+    let newTaskData = req.body.newTaskData;
+
+    taskController.updateTask(taskId, newTaskData)
+    .then((result) => {
+      res.json({task: result.task, message: 'Task updated successfully.'});
+    })
+    .catch((err) => {
+      res.status(err.status).send(err.error);
+    });
+  })
+  .delete((req,res) => {
+    let taskId = req.params.id;
+
+    taskController.deleteTask(taskId)
+    .then((result) => {
+      res.json({message: 'Task '+ taskId +'removed successfully.'});
+    })
+    .catch((err) => {
+      res.status(err.status).send(err.error);
+    });
+  });
 };
