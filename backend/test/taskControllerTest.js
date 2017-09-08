@@ -38,13 +38,30 @@ describe('TaskController', function(){
     });
   });
 
+  describe('updateTask()', function(){
+    it('should return updated task', function(){
+      const TEST_TASK_ID = '59b165ed7a4334169be01700';
+
+      let dateNow = new Date();
+      let updateTask = taskController.updateTask(TEST_TASK_ID, {date: dateNow});
+
+      return assert.isFulfilled(updateTask).then(function(result){
+        let resultTask = result.task;
+        let taskDate = resultTask.date;
+
+        assert.typeOf(resultTask, 'object');
+        assert.equal(dateNow, taskDate);
+      });
+    });
+  });
+
   describe('getAllTasks()', function(){
     it('should return array of tasks', function(){
       let getTasks = taskController.getAllTasks();
 
       return assert.isFulfilled(getTasks).then(function(result){
         let resultTasks = result.tasks;
-        assert.typeOf(resultTask, 'array');
+        assert.typeOf(resultTasks, 'array');
       });
     });
   });

@@ -41,6 +41,25 @@ class taskController {
     });
   }
 
+  updateTask(taskId, newData){
+    return new Promise((resolve, reject) => {
+      Task.findById(taskId, (error, task) => {
+        if(error)
+          reject({error: error, status: 500});
+        if(task == null)
+          reject({error: new Error('Task not found'), status: 404});
+
+        task.set(newData);
+        task.save((error, newTask) => {
+          if(error)
+            reject({error: error, status: 500});
+
+          resolve({task: newTask});
+        });
+      });
+    })
+  }
+
   deleteTasksCreatedForTest(){
     return new Promise((resolve, reject) => {
       Task.remove({ isCreatedForTest: true }, function (error) {
