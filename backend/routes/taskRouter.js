@@ -32,5 +32,17 @@ module.exports = (router) => {
     .catch((err) => {
       res.status(err.status).send(err.error);
     });
+  })
+  .put((req,res) => {
+    let taskId = req.params.id;
+    let newTaskData = req.body.newTaskData;
+
+    taskController.updateTask(taskId, newTaskData)
+    .then((result) => {
+      res.json({task: result.task, message: 'Task updated successfully.'})
+    })
+    .catch((err) => {
+      res.status(err.status).send(err.error);
+    });
   });
 };

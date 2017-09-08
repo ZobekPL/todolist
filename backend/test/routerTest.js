@@ -154,7 +154,7 @@ describe('Router', function(){
           });
         });
 
-        it('should response array of tasks and message', function(done){
+        it('should response with task and message', function(done){
           chai.request(server.app)
           .get('/api/task/'+TEST_TASK_ID)
           .end(function(err, res){
@@ -164,6 +164,47 @@ describe('Router', function(){
             assert.isDefined(message);
             assert.isDefined(resultTask);
             assert.typeOf(resultTask, 'object');
+            done();
+          });
+        });
+      });
+      describe('PUT', function(){
+        it('should be successfull', function(done){
+          let dateNow = new Date();
+          chai.request(server.app)
+          .put('/api/task/'+TEST_TASK_ID)
+          .type('form')
+          .send({
+            newTaskData: {
+              date: dateNow
+            }
+          })
+          .end(function(err, res){
+            assert.equal(res.status, 200);
+            assert.typeOf(err, 'null');
+            done();
+          });
+        });
+
+        it('should response array of tasks and message', function(done){
+          let dateNow = new Date();
+          chai.request(server.app)
+          .put('/api/task/'+TEST_TASK_ID)
+          .type('form')
+          .send({
+            newTaskData:{
+              date: dateNow
+            }
+          })
+          .end(function(err, res){
+            let message = res.body.message;
+            let resultTask = res.body.task;
+            let resultTaskDate = resultTask.date;
+
+            assert.isDefined(message);
+            assert.isDefined(resultTask);
+            assert.typeOf(resultTask, 'object');
+            assert.equal(new Date(resultTaskDate).getTime(), dateNow.getTime());
             done();
           });
         });
