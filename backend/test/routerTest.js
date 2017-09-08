@@ -168,6 +168,7 @@ describe('Router', function(){
           });
         });
       });
+
       describe('PUT', function(){
         it('should be successfull', function(done){
           let dateNow = new Date();
@@ -205,6 +206,40 @@ describe('Router', function(){
             assert.isDefined(resultTask);
             assert.typeOf(resultTask, 'object');
             assert.equal(new Date(resultTaskDate).getTime(), dateNow.getTime());
+            done();
+          });
+        });
+      });
+
+      describe('DELETE', function(){
+        let testingTaskId;
+
+        before(function(done){
+            taskController.createTask({title: 'testtest'})
+            .then(function(result){
+              let taskId = result.task._id;
+              testingTaskId = taskId;
+              done();
+            });
+        });
+
+        it('should be successfull', function(done){
+          chai.request(server.app)
+          .delete('/api/task/'+testingTaskId)
+          .end(function(err, res){
+            assert.equal(res.status, 200);
+            assert.typeOf(err, 'null');
+            done();
+          });
+        });
+
+        it('should delete task', function(done){
+          chai.request(server.app)
+          .get('/api/task/'+testingTaskId)
+          .end(function(err, res){
+
+            assert.isNotNull(err);
+            assert.equal(err.status, 404);
             done();
           });
         });

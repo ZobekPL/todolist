@@ -55,6 +55,42 @@ describe('TaskController', function(){
     });
   });
 
+  describe('deleteTask()', function(){
+    let testingTaskId;
+
+    beforeEach(function(done){
+        taskController.createTask({title: 'testtest'})
+        .then(function(result){
+          let taskId = result.task._id;
+          testingTaskId = taskId;
+          done();
+        });
+    });
+
+    it('should delete task based on given id', function(){
+      let deleteTask = taskController.deleteTask(testingTaskId);
+
+      return assert.isFulfilled(deleteTask).then(function(result){
+        let deletedTaskId = result.taskId;
+
+        assert.equal(deletedTaskId, testingTaskId);
+      });
+    });
+
+    it('should delete task from db', function(){
+      let deleteTask = taskController.deleteTask(testingTaskId);
+
+      return assert.isFulfilled(deleteTask).then(function(result){
+        let getDeletedTaskById = taskController.getTaskById(result.taskId);
+
+        return assert.isRejected(getDeletedTaskById).then(function(result){
+          assert.isNotNull(result.error);
+          assert.equal(result.status, 404);
+        });
+      });
+    });
+  });
+
   describe('getAllTasks()', function(){
     it('should return array of tasks', function(){
       let getTasks = taskController.getAllTasks();

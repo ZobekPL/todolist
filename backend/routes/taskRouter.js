@@ -39,7 +39,18 @@ module.exports = (router) => {
 
     taskController.updateTask(taskId, newTaskData)
     .then((result) => {
-      res.json({task: result.task, message: 'Task updated successfully.'})
+      res.json({task: result.task, message: 'Task updated successfully.'});
+    })
+    .catch((err) => {
+      res.status(err.status).send(err.error);
+    });
+  })
+  .delete((req,res) => {
+    let taskId = req.params.id;
+
+    taskController.deleteTask(taskId)
+    .then((result) => {
+      res.json({message: 'Task '+ taskId +'removed successfully.'});
     })
     .catch((err) => {
       res.status(err.status).send(err.error);

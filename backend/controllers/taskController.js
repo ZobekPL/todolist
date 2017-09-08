@@ -60,6 +60,17 @@ class taskController {
     })
   }
 
+  deleteTask(taskId){
+    return new Promise((resolve, reject) => {
+      Task.remove({ _id: taskId }, function (error) {
+        if(error)
+          reject({error: error, status: 500});
+
+        resolve({taskId: taskId});
+      });
+    });
+  }
+
   deleteTasksCreatedForTest(){
     return new Promise((resolve, reject) => {
       Task.remove({ isCreatedForTest: true }, function (error) {
