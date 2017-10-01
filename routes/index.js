@@ -9,7 +9,7 @@ taskRouter(router);
 //Connection test
 router.route('/')
 .get((req, res) => {
-  res.json({message: 'Hello world'});
+  res.render('index', {title: 'todo',message: 'Hello world'});
 });
 
 module.exports = router;
