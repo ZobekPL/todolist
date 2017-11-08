@@ -1,0 +1,30 @@
+/*TEMPLATE*/
+body{
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+/*INDEX*/
+#index{
+  text-align: center;
+  padding-left: 50px;
+  padding-right: 50px;
+} #index header{
+    padding-top: 10px;
+    padding-bottom: 15px;
+
+    text-align: center;
+    background-color: #dddddd;
+  } #index header h1{
+      text-transform: uppercase;
+    }
+
+/*FOOTER*/
+footer{
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f8f8f8;
+}
