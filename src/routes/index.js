@@ -8,7 +8,7 @@ taskRouter(router);
 //Connection test
 router.route('/')
 .get((req, res) => {
-  res.render('index', {title: 'todo'});
+  res.render('index', {title: 'TODO LIST'});
 });
 
 module.exports = router;

@@ -3,7 +3,7 @@ process.env.NODE_ENV = 'test';
 let chai = require('chai');
 let assert = chai.assert;
 
-let server = require('../');
+let server = require('../app');
 
 let port = server.listener.address().port;
 

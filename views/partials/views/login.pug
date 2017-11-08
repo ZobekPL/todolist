@@ -1,0 +1,10 @@
+html
+  body
+    h1 Login
+    p #{message}
+    form(method="POST" action="/login")
+      label(for="username")
+      input(name="username" type="text" placeholder="username")
+      label(for="password")
+      input(name="password" type="password" placeholder="password")
+      button(type="submit") Login

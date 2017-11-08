@@ -1,0 +1,19 @@
+.mg-b-30{
+  margin-bottom: 30px;
+}
+
+footer{
+  background-color: #444444;
+  color: white;
+  padding-top:15px;
+  padding-bottom: 5px;
+}
+
+.todo-list-item{
+  cursor: pointer;
+}
+
+.todo-list-item-done{
+  color: #eeeeee;
+  text-decoration-line: line-through;
+}
