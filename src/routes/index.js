@@ -1,4 +1,3 @@
-"use strict";
 let express = require('express');
 let router = express.Router();
 
@@ -9,7 +8,7 @@ taskRouter(router);
 //Connection test
 router.route('/')
 .get((req, res) => {
-  res.render('index', {title: 'todo',message: 'Hello world'});
+  res.render('index', {title: 'todo'});
 });
 
 module.exports = router;

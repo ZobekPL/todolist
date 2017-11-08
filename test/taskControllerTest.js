@@ -2,7 +2,7 @@ let chai = require('chai');
 let chaiAsP = require('chai-as-promised');
 let assert = chai.assert;
 
-let taskController = require('../controllers/taskController');
+let taskController = require('../src/controllers/taskController');
 
 
 chai.use(chaiAsP);

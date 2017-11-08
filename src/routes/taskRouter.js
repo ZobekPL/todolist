@@ -1,4 +1,3 @@
-"use strict";
 let taskController = require('../controllers/taskController');
 
 module.exports = (router) => {

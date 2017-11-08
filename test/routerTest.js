@@ -1,35 +1,24 @@
-"use strict";
-
 process.env.NODE_ENV = 'test';
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let assert = chai.assert;
 
-let taskController = require('../controllers/taskController');
+let taskController = require('../src/controllers/taskController');
 let server = require('../');
 
 chai.use(chaiHttp);
 
 describe('Router', function(){
   describe('index.js', function(){
-    describe('/api', function(){
+    describe('/', function(){
       describe('GET', function(){
         it('should be successfull', function(done){
           chai.request(server.app)
-          .get('/api')
+          .get('/')
           .end(function(err, res){
             assert.typeOf(err, 'null');
             assert.equal(res.status, 200);
-            done();
-          });
-        });
-
-        it('should response hello world message', function(done){
-          chai.request(server.app)
-          .get('/api')
-          .end(function(err, res){
-            assert.deepEqual(res.body, { message: "Hello world"});
             done();
           });
         });
@@ -42,7 +31,7 @@ describe('Router', function(){
       describe('GET', function(){
         it('should be successfull', function(done){
           chai.request(server.app)
-          .get('/api/tasks')
+          .get('/tasks')
           .end(function(err, res){
             assert.equal(res.status, 200);
             assert.typeOf(err, 'null');
@@ -52,7 +41,7 @@ describe('Router', function(){
 
         it('should response array of tasks and message', function(done){
           chai.request(server.app)
-          .get('/api/tasks')
+          .get('/tasks')
           .end(function(err, res){
             let message = res.body.message;
             let resultTasks = res.body.tasks;
@@ -75,7 +64,7 @@ describe('Router', function(){
 
         it('should create be successfull', function(done){
           chai.request(server.app)
-          .post('/api/tasks')
+          .post('/tasks')
           .type('form')
           .send({
             title: 'Test task',
@@ -97,7 +86,7 @@ describe('Router', function(){
           };
 
           chai.request(server.app)
-          .post('/api/tasks')
+          .post('/tasks')
           .type('form')
           .send({
             title: 'Test task',
@@ -125,7 +114,7 @@ describe('Router', function(){
           };
 
           chai.request(server.app)
-          .post('/api/tasks')
+          .post('/tasks')
           .type('form')
           .send({
             titleze: true,
@@ -146,7 +135,7 @@ describe('Router', function(){
       describe('GET', function(){
         it('should be successfull', function(done){
           chai.request(server.app)
-          .get('/api/task/59b165db7a4334169be016fe')
+          .get('/task/59b165db7a4334169be016fe')
           .end(function(err, res){
             assert.equal(res.status, 200);
             assert.typeOf(err, 'null');
@@ -156,7 +145,7 @@ describe('Router', function(){
 
         it('should response with task and message', function(done){
           chai.request(server.app)
-          .get('/api/task/'+TEST_TASK_ID)
+          .get('/task/'+TEST_TASK_ID)
           .end(function(err, res){
             let message = res.body.message;
             let resultTask = res.body.task;
@@ -173,7 +162,7 @@ describe('Router', function(){
         it('should be successfull', function(done){
           let dateNow = new Date();
           chai.request(server.app)
-          .put('/api/task/'+TEST_TASK_ID)
+          .put('/task/'+TEST_TASK_ID)
           .type('form')
           .send({
             newTaskData: {
@@ -190,7 +179,7 @@ describe('Router', function(){
         it('should response array of tasks and message', function(done){
           let dateNow = new Date();
           chai.request(server.app)
-          .put('/api/task/'+TEST_TASK_ID)
+          .put('/task/'+TEST_TASK_ID)
           .type('form')
           .send({
             newTaskData:{
@@ -225,7 +214,7 @@ describe('Router', function(){
 
         it('should be successfull', function(done){
           chai.request(server.app)
-          .delete('/api/task/'+testingTaskId)
+          .delete('/task/'+testingTaskId)
           .end(function(err, res){
             assert.equal(res.status, 200);
             assert.typeOf(err, 'null');
@@ -235,7 +224,7 @@ describe('Router', function(){
 
         it('should delete task', function(done){
           chai.request(server.app)
-          .get('/api/task/'+testingTaskId)
+          .get('/task/'+testingTaskId)
           .end(function(err, res){
 
             assert.isNotNull(err);

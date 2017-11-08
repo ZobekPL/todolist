@@ -1,5 +1,5 @@
 let mongoose = require('mongoose');
-let dbConnection = require('../config/database');
+let dbConnection = require('../utils/database');
 
 
 let TaskSchema = new mongoose.Schema({

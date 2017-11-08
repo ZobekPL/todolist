@@ -1,7 +1,6 @@
 "use strict";
-let app = require('./app');
-const port = 3000;
-let port2;
+let app = require('./src/app');
+const port = require('./src/config').port;
 let listener = app.listen(port);
 
 
