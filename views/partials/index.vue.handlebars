@@ -3,28 +3,48 @@ var app = new Vue({
   el: '#app',
   delimiters: ['${', '}'],
   data: {
-    newTodo: '',
-    todos: []
+    newTask: '',
+    tasks: []
   },
   methods: {
-    addTodo: function(){
-      var newTodo = {
-        body: this.newTodo,
-        isDone: false
-      };
-
-      this.todos.unshift(newTodo); //pushes newTodo to front of array
-
-      this.newTodo = '';
+    loadTasks: function(){
+      axios.get('/tasks')
+      .then((result) => {
+        this.tasks = result.data.tasks;
+      });
     },
 
-    switchTodo: function(todo){
-      todo.isDone = !todo.isDone;
+    addTask: function(){
+      if(this.newTask == '')
+        return;
+
+      axios.post('/tasks', { title: this.newTask })
+      .then(() => {
+        this.newTask = '';
+        this.loadTasks();
+      });
     },
 
-    removeTodo: function(todoIndex){
-      this.todos.splice(todoIndex, 1);
+    switchTask: function(task){
+      axios.put(`/task/${task._id}`, {
+        newTaskData:{
+          isDone: !task.isDone
+        }
+      })
+      .then(() => {
+        task.isDone = !task.isDone;
+      });
+    },
+
+    removeTask: function(task, taskIndex){
+      axios.delete(`/task/${task._id}`)
+      .then(() => {
+        this.tasks.splice(taskIndex, 1);
+      });
     }
-  }
+  },
+   beforeMount(){
+      this.loadTasks()
+   },
 });
 </script>

@@ -1,12 +1,12 @@
 <div class="row" style="margin-bottom:25px">
   <div class="col-sm-6 col-sm-offset-3">
     <ul class="list-group">
-      <li v-for="(todo, index) in todos"
-          v-bind:class="{'todo-list-item-done': todo.isDone}"
-          class="list-group-item todo-list-item">
-        <span v-on:click="switchTodo(todo)">${ todo.body }</span>
-        <button v-bind:class="{'disabled': todo.isDone, 'btn-danger': !todo.isDone}"
-                v-on:click="removeTodo(index)"
+      <li v-for="(task, index) in tasks"
+          v-bind:class="{'task-list-item-done': task.isDone}"
+          class="list-group-item task-list-item">
+        <span v-on:click="switchTask(task)">${ task.title }</span>
+        <button v-bind:class="{'disabled': task.isDone, 'btn-danger': !task.isDone}"
+                v-on:click="removeTask(task, index)"
                 class="mg-l-15 btn btn-sm">
                 Remove
         </button>

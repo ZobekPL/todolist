@@ -12,11 +12,11 @@ footer{
   padding-bottom: 5px;
 }
 
-.todo-list-item{
+.task-list-item{
   cursor: pointer;
 }
 
-.todo-list-item-done{
+.task-list-item-done{
   color: #eeeeee;
   text-decoration-line: line-through;
 }
