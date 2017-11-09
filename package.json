@@ -4,7 +4,8 @@
   "description": "Simple todolist created for learning purpouses.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "dev": "nodemon app.js",
+    "start": "node app.js",
     "test": "mocha"
   },
   "repository": {
