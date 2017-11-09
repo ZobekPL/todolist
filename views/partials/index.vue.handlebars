@@ -1,0 +1,30 @@
+<script>
+var app = new Vue({
+  el: '#app',
+  delimiters: ['${', '}'],
+  data: {
+    newTodo: '',
+    todos: []
+  },
+  methods: {
+    addTodo: function(){
+      var newTodo = {
+        body: this.newTodo,
+        isDone: false
+      };
+
+      this.todos.unshift(newTodo); //pushes newTodo to front of array
+
+      this.newTodo = '';
+    },
+
+    switchTodo: function(todo){
+      todo.isDone = !todo.isDone;
+    },
+
+    removeTodo: function(todoIndex){
+      this.todos.splice(todoIndex, 1);
+    }
+  }
+});
+</script>

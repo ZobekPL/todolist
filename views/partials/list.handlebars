@@ -1,9 +1,16 @@
 <div class="row" style="margin-bottom:25px">
   <div class="col-sm-6 col-sm-offset-3">
     <ul class="list-group">
-      <li class="list-group-item todo-list-item">Cras justo odio <button class="btn btn-sm btn-danger">Remove</button></li>
-      <li class="list-group-item todo-list-item todo-list-item-done">Cras justo odio <button class="btn btn-sm btn-light disabled">Remove</button></li>
-      <li class="list-group-item todo-list-item">Cras justo odio <button class="btn btn-sm btn-danger">Remove</button></li>
+      <li v-for="(todo, index) in todos"
+          v-bind:class="{'todo-list-item-done': todo.isDone}"
+          class="list-group-item todo-list-item">
+        <span v-on:click="switchTodo(todo)">${ todo.body }</span>
+        <button v-bind:class="{'disabled': todo.isDone, 'btn-danger': !todo.isDone}"
+                v-on:click="removeTodo(index)"
+                class="mg-l-15 btn btn-sm">
+                Remove
+        </button>
+      </li>
     </ul>
   </div>
 </div>
