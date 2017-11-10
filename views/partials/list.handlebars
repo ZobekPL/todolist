@@ -2,13 +2,18 @@
   <div class="col-sm-6 col-sm-offset-3">
     <ul class="list-group">
       <li v-for="(task, index) in tasks"
-          v-bind:class="{'task-list-item-done': task.isDone}"
+          v-bind:class="{'task-list-item-done': (task.isDone && !isTaskBeingEdited(index))}"
           class="list-group-item task-list-item">
         <input type="checkbox"
                v-bind:checked="task.isDone"
                v-on:change="switchTask(task)"
                class="mg-r-15">
-        <span>${ task.title }</span>
+        <div v-if="isTaskBeingEdited(index)">
+          <input type="text"
+                v-model="task.title">
+          <button v-on:click="updateTask(task)" class="btn btn-success">Edit</button>
+       </div>
+        <span v-else v-on:click="editTask(index)">${ task.title }</span>
         <button v-on:click="removeTask(task, index)"
                 class="mg-l-15 btn btn-link btn-sm"
                 style="float:right">

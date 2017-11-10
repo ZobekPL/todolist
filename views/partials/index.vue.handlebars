@@ -5,7 +5,9 @@ var app = new Vue({
   data: {
     newTask: '',
     tasks: [],
-    isLoading: false
+    isLoading: false,
+    isEditing: false,
+    editingTaskIndex: 0
   },
   methods: {
     loadTasks: function(){
@@ -66,7 +68,40 @@ var app = new Vue({
       if(result.data.message != ''){
         console.log(`SUCCESS: ${result.data.message}`);
       }
-    }
+    },
+    isTaskBeingEdited(taskIndex){
+      if(!this.isEditing){
+        return false;
+      }else if(this.editingTaskIndex == taskIndex){
+        return true;
+      }else {
+        return false;
+      }
+    },
+
+    editTask(taskIndex){
+      if(this.isEditing == true){
+        alert('You have to finish editing previous task!');
+        return;
+      }
+      this.isEditing = true;
+      this.editingTaskIndex = taskIndex;
+    },
+
+    updateTask: function(task){
+      this.isEditing=false;
+      this.isLoading = true;
+
+      axios.put(`/task/${task._id}`, {
+        newTaskData:task
+      })
+      .then((result) => {
+        this.logResult(result);
+        this.isLoading = false;
+
+        this.loadTasks();
+      });
+    },
   },
    beforeMount(){
       this.loadTasks();
