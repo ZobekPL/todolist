@@ -1,12 +1,12 @@
 <div id="app" class="container">
   <div class="row mg-b-30">
-    <div class="col-sm-6.col-sm-offset-3">
+    <div class="col-sm-6 col-sm-offset-3 text-center">
       <h1>{{ title }}</h1>
       <p v-if="isLoading">Server synchronization... please wait.</p>
       <p v-else>Everything up to date.</p>
     </div>
   </div>
-  <div class="row mg-b-30">
+  <div class="row mg-b-30 text-center">
     <form class="col-sm-6 form-inline col-sm-offset-3">
       <div class="form-group">
         <input type="text" class="form-control" placeholder="what do you need to do?" v-model="newTask">

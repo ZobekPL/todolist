@@ -4,10 +4,14 @@
       <li v-for="(task, index) in tasks"
           v-bind:class="{'task-list-item-done': task.isDone}"
           class="list-group-item task-list-item">
-        <span v-on:click="switchTask(task)">${ task.title }</span>
-        <button v-bind:class="{'disabled': task.isDone, 'btn-danger': !task.isDone}"
-                v-on:click="removeTask(task, index)"
-                class="mg-l-15 btn btn-sm">
+        <input type="checkbox"
+               v-bind:checked="task.isDone"
+               v-on:change="switchTask(task)"
+               class="mg-r-15">
+        <span>${ task.title }</span>
+        <button v-on:click="removeTask(task, index)"
+                class="mg-l-15 btn btn-link btn-sm"
+                style="float:right">
                 Remove
         </button>
       </li>

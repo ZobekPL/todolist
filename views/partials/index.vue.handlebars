@@ -34,15 +34,15 @@ var app = new Vue({
 
     switchTask: function(task){
       this.isLoading = true;
+      task.isDone = !task.isDone;
 
       axios.put(`/task/${task._id}`, {
         newTaskData:{
-          isDone: !task.isDone
+          isDone: task.isDone
         }
       })
       .then((result) => {
         this.logResult(result);
-        task.isDone = !task.isDone;
         this.isLoading = false;
 
         this.loadTasks();
