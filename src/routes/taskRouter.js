@@ -49,7 +49,7 @@ module.exports = (router) => {
 
     taskController.deleteTask(taskId)
     .then((result) => {
-      res.json({message: 'Task '+ taskId +'removed successfully.'});
+      res.json({message: 'Task '+ taskId +' removed successfully.'});
     })
     .catch((err) => {
       res.status(err.status).send(err.error);

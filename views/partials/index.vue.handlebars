@@ -4,13 +4,18 @@ var app = new Vue({
   delimiters: ['${', '}'],
   data: {
     newTask: '',
-    tasks: []
+    tasks: [],
+    isLoading: false
   },
   methods: {
     loadTasks: function(){
+      this.isLoading = true;
+
       axios.get('/tasks')
       .then((result) => {
+        this.logResult(result);
         this.tasks = result.data.tasks;
+        this.isLoading = false;
       });
     },
 
@@ -19,32 +24,52 @@ var app = new Vue({
         return;
 
       axios.post('/tasks', { title: this.newTask })
-      .then(() => {
+      .then((result) => {
+        this.logResult(result);
         this.newTask = '';
+
         this.loadTasks();
       });
     },
 
     switchTask: function(task){
+      this.isLoading = true;
+
       axios.put(`/task/${task._id}`, {
         newTaskData:{
           isDone: !task.isDone
         }
       })
-      .then(() => {
+      .then((result) => {
+        this.logResult(result);
         task.isDone = !task.isDone;
+        this.isLoading = false;
+
+        this.loadTasks();
       });
     },
 
     removeTask: function(task, taskIndex){
+      this.isLoading = true;
+
       axios.delete(`/task/${task._id}`)
-      .then(() => {
+      .then((result) => {
+        this.logResult(result);
         this.tasks.splice(taskIndex, 1);
+        this.isLoading = false;
+
+        this.loadTasks();
       });
+    },
+
+    logResult: function(result){
+      if(result.data.message != ''){
+        console.log(`SUCCESS: ${result.data.message}`);
+      }
     }
   },
    beforeMount(){
-      this.loadTasks()
+      this.loadTasks();
    },
 });
 </script>
